@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Writing Functions | Best Coding Practices in R</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Writing Functions | Best Coding Practices in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Writing Functions | Best Coding Practices in R" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Daniel Hammocks, Senior Data Scientist" />
+
+
+<meta name="date" content="2024-08-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="code-syntax-and-spacing.html"/>
+<link rel="next" href="error-handling.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/MOPAC-DS-Square.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i>Purpose of this Book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#why-coding-practices-matter"><i class="fa fa-check"></i><b>1.1</b> Why Coding Practices Matter</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#what-this-book-covers"><i class="fa fa-check"></i><b>1.2</b> What This Book Covers</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#how-to-use-this-book"><i class="fa fa-check"></i><b>1.3</b> How to Use This Book</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#who-this-book-is-for"><i class="fa fa-check"></i><b>1.4</b> Who This Book Is For</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#final-thoughts"><i class="fa fa-check"></i><b>1.5</b> Final Thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="naming-conventions.html"><a href="naming-conventions.html"><i class="fa fa-check"></i><b>2</b> Naming Conventions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="naming-conventions.html"><a href="naming-conventions.html#naming-scripts"><i class="fa fa-check"></i><b>2.1</b> Naming Scripts</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="naming-conventions.html"><a href="naming-conventions.html#best-practices-for-script-names"><i class="fa fa-check"></i><b>2.1.1</b> Best Practices for Script Names</a></li>
+<li class="chapter" data-level="2.1.2" data-path="naming-conventions.html"><a href="naming-conventions.html#example-script-names"><i class="fa fa-check"></i><b>2.1.2</b> Example Script Names</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="naming-conventions.html"><a href="naming-conventions.html#naming-variables"><i class="fa fa-check"></i><b>2.2</b> Naming Variables</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="naming-conventions.html"><a href="naming-conventions.html#guidelines-for-variable-names"><i class="fa fa-check"></i><b>2.2.1</b> Guidelines for Variable Names</a></li>
+<li class="chapter" data-level="2.2.2" data-path="naming-conventions.html"><a href="naming-conventions.html#example-variable-names"><i class="fa fa-check"></i><b>2.2.2</b> Example Variable Names</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="naming-conventions.html"><a href="naming-conventions.html#naming-functions"><i class="fa fa-check"></i><b>2.3</b> Naming Functions</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="naming-conventions.html"><a href="naming-conventions.html#best-practices-for-function-names"><i class="fa fa-check"></i><b>2.3.1</b> Best Practices for Function Names</a></li>
+<li class="chapter" data-level="2.3.2" data-path="naming-conventions.html"><a href="naming-conventions.html#example-function-names"><i class="fa fa-check"></i><b>2.3.2</b> Example Function Names</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="naming-conventions.html"><a href="naming-conventions.html#consistency-is-key"><i class="fa fa-check"></i><b>2.4</b> Consistency is Key</a></li>
+<li class="chapter" data-level="2.5" data-path="naming-conventions.html"><a href="naming-conventions.html#summary"><i class="fa fa-check"></i><b>2.5</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="organising-scripts.html"><a href="organising-scripts.html"><i class="fa fa-check"></i><b>3</b> Organising Scripts</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="organising-scripts.html"><a href="organising-scripts.html#structuring-scripts"><i class="fa fa-check"></i><b>3.1</b> Structuring Scripts</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="organising-scripts.html"><a href="organising-scripts.html#logical-script-structure"><i class="fa fa-check"></i><b>3.1.1</b> Logical Script Structure</a></li>
+<li class="chapter" data-level="3.1.2" data-path="organising-scripts.html"><a href="organising-scripts.html#using-functions-for-modularity"><i class="fa fa-check"></i><b>3.1.2</b> Using Functions for Modularity</a></li>
+<li class="chapter" data-level="3.1.3" data-path="organising-scripts.html"><a href="organising-scripts.html#script-length"><i class="fa fa-check"></i><b>3.1.3</b> Script Length</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="organising-scripts.html"><a href="organising-scripts.html#organising-files-and-directories"><i class="fa fa-check"></i><b>3.2</b> Organising Files and Directories</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="organising-scripts.html"><a href="organising-scripts.html#directory-structure"><i class="fa fa-check"></i><b>3.2.1</b> Directory Structure</a></li>
+<li class="chapter" data-level="3.2.2" data-path="organising-scripts.html"><a href="organising-scripts.html#data-files"><i class="fa fa-check"></i><b>3.2.2</b> Data Files</a></li>
+<li class="chapter" data-level="3.2.3" data-path="organising-scripts.html"><a href="organising-scripts.html#scripts"><i class="fa fa-check"></i><b>3.2.3</b> Scripts</a></li>
+<li class="chapter" data-level="3.2.4" data-path="organising-scripts.html"><a href="organising-scripts.html#output-files"><i class="fa fa-check"></i><b>3.2.4</b> Output Files</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="organising-scripts.html"><a href="organising-scripts.html#source-control"><i class="fa fa-check"></i><b>3.3</b> Source Control</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="organising-scripts.html"><a href="organising-scripts.html#using-git-for-version-control"><i class="fa fa-check"></i><b>3.3.1</b> Using Git for Version Control</a></li>
+<li class="chapter" data-level="3.3.2" data-path="organising-scripts.html"><a href="organising-scripts.html#naming-conventions-in-git"><i class="fa fa-check"></i><b>3.3.2</b> Naming Conventions in Git</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="organising-scripts.html"><a href="organising-scripts.html#documentation"><i class="fa fa-check"></i><b>3.4</b> Documentation</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="organising-scripts.html"><a href="organising-scripts.html#readme-files"><i class="fa fa-check"></i><b>3.4.1</b> README Files</a></li>
+<li class="chapter" data-level="3.4.2" data-path="organising-scripts.html"><a href="organising-scripts.html#inline-documentation"><i class="fa fa-check"></i><b>3.4.2</b> Inline Documentation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="organising-scripts.html"><a href="organising-scripts.html#summary-1"><i class="fa fa-check"></i><b>3.5</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="commenting-code.html"><a href="commenting-code.html"><i class="fa fa-check"></i><b>4</b> Commenting Code</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="commenting-code.html"><a href="commenting-code.html#the-purpose-of-comments"><i class="fa fa-check"></i><b>4.1</b> 1. The Purpose of Comments</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="commenting-code.html"><a href="commenting-code.html#why-comment-your-code"><i class="fa fa-check"></i><b>4.1.1</b> 1.1 Why Comment Your Code?</a></li>
+<li class="chapter" data-level="4.1.2" data-path="commenting-code.html"><a href="commenting-code.html#when-to-comment"><i class="fa fa-check"></i><b>4.1.2</b> 1.2 When to Comment</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="commenting-code.html"><a href="commenting-code.html#best-practices-for-commenting"><i class="fa fa-check"></i><b>4.2</b> 2. Best Practices for Commenting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="commenting-code.html"><a href="commenting-code.html#writing-clear-and-concise-comments"><i class="fa fa-check"></i><b>4.2.1</b> 2.1 Writing Clear and Concise Comments</a></li>
+<li class="chapter" data-level="4.2.2" data-path="commenting-code.html"><a href="commenting-code.html#comment-placement"><i class="fa fa-check"></i><b>4.2.2</b> 2.2 Comment Placement</a></li>
+<li class="chapter" data-level="4.2.3" data-path="commenting-code.html"><a href="commenting-code.html#consistency-in-commenting"><i class="fa fa-check"></i><b>4.2.3</b> 2.3 Consistency in Commenting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="commenting-code.html"><a href="commenting-code.html#common-pitfalls-to-avoid"><i class="fa fa-check"></i><b>4.3</b> 3. Common Pitfalls to Avoid</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="commenting-code.html"><a href="commenting-code.html#over-commenting"><i class="fa fa-check"></i><b>4.3.1</b> 3.1 Over-Commenting</a></li>
+<li class="chapter" data-level="4.3.2" data-path="commenting-code.html"><a href="commenting-code.html#commenting-out-code"><i class="fa fa-check"></i><b>4.3.2</b> 3.2 Commenting Out Code</a></li>
+<li class="chapter" data-level="4.3.3" data-path="commenting-code.html"><a href="commenting-code.html#vague-or-uninformative-comments"><i class="fa fa-check"></i><b>4.3.3</b> 3.3 Vague or Uninformative Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="commenting-code.html"><a href="commenting-code.html#advanced-commenting-techniques"><i class="fa fa-check"></i><b>4.4</b> 4. Advanced Commenting Techniques</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="commenting-code.html"><a href="commenting-code.html#using-roxygen2-for-documentation"><i class="fa fa-check"></i><b>4.4.1</b> 4.1 Using Roxygen2 for Documentation</a></li>
+<li class="chapter" data-level="4.4.2" data-path="commenting-code.html"><a href="commenting-code.html#writing-to-do-comments"><i class="fa fa-check"></i><b>4.4.2</b> 4.2 Writing “To-Do” Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="commenting-code.html"><a href="commenting-code.html#summary-2"><i class="fa fa-check"></i><b>4.5</b> 5. Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html"><i class="fa fa-check"></i><b>5</b> Code Syntax and Spacing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#importance-of-consistent-syntax"><i class="fa fa-check"></i><b>5.1</b> 1. Importance of Consistent Syntax</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#why-syntax-matters"><i class="fa fa-check"></i><b>5.1.1</b> 1.1 Why Syntax Matters</a></li>
+<li class="chapter" data-level="5.1.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#adopting-a-style-guide"><i class="fa fa-check"></i><b>5.1.2</b> 1.2 Adopting a Style Guide</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#indentation"><i class="fa fa-check"></i><b>5.2</b> 2. Indentation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#standard-indentation-practices"><i class="fa fa-check"></i><b>5.2.1</b> 2.1 Standard Indentation Practices</a></li>
+<li class="chapter" data-level="5.2.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#indentation-in-functions"><i class="fa fa-check"></i><b>5.2.2</b> 2.2 Indentation in Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#spacing"><i class="fa fa-check"></i><b>5.3</b> 3. Spacing</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#spacing-around-operators"><i class="fa fa-check"></i><b>5.3.1</b> 3.1 Spacing Around Operators</a></li>
+<li class="chapter" data-level="5.3.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#spacing-after-commas-and-colons"><i class="fa fa-check"></i><b>5.3.2</b> 3.2 Spacing After Commas and Colons</a></li>
+<li class="chapter" data-level="5.3.3" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#spacing-in-function-calls"><i class="fa fa-check"></i><b>5.3.3</b> 3.3 Spacing in Function Calls</a></li>
+<li class="chapter" data-level="5.3.4" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#spacing-in-conditional-statements"><i class="fa fa-check"></i><b>5.3.4</b> 3.4 Spacing in Conditional Statements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#line-breaks"><i class="fa fa-check"></i><b>5.4</b> 4. Line Breaks</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#breaking-long-lines"><i class="fa fa-check"></i><b>5.4.1</b> 4.1 Breaking Long Lines</a></li>
+<li class="chapter" data-level="5.4.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#avoiding-deep-nesting"><i class="fa fa-check"></i><b>5.4.2</b> 4.2 Avoiding Deep Nesting</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#aligning-code"><i class="fa fa-check"></i><b>5.5</b> 5. Aligning Code</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#aligning-assignments"><i class="fa fa-check"></i><b>5.5.1</b> 5.1 Aligning Assignments</a></li>
+<li class="chapter" data-level="5.5.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#aligning-function-arguments"><i class="fa fa-check"></i><b>5.5.2</b> 5.2 Aligning Function Arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#comment-placement-and-spacing"><i class="fa fa-check"></i><b>5.6</b> 6. Comment Placement and Spacing</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#spacing-before-comments"><i class="fa fa-check"></i><b>5.6.1</b> 6.1 Spacing Before Comments</a></li>
+<li class="chapter" data-level="5.6.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#block-comment-formatting"><i class="fa fa-check"></i><b>5.6.2</b> 6.2 Block Comment Formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#avoiding-common-pitfalls"><i class="fa fa-check"></i><b>5.7</b> 7. Avoiding Common Pitfalls</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#overuse-of-blank-lines"><i class="fa fa-check"></i><b>5.7.1</b> 7.1 Overuse of Blank Lines</a></li>
+<li class="chapter" data-level="5.7.2" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#avoiding-excessive-line-length"><i class="fa fa-check"></i><b>5.7.2</b> 7.2 Avoiding Excessive Line Length</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="code-syntax-and-spacing.html"><a href="code-syntax-and-spacing.html#summary-3"><i class="fa fa-check"></i><b>5.8</b> 8. Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="id_6.html"><a href="id_6.html"><i class="fa fa-check"></i><b>6</b> Writing Functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="id_6.html"><a href="id_6.html#the-purpose-of-functions"><i class="fa fa-check"></i><b>6.1</b> 1. The Purpose of Functions</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="id_6.html"><a href="id_6.html#why-write-functions"><i class="fa fa-check"></i><b>6.1.1</b> 1.1 Why Write Functions?</a></li>
+<li class="chapter" data-level="6.1.2" data-path="id_6.html"><a href="id_6.html#when-to-write-a-function"><i class="fa fa-check"></i><b>6.1.2</b> 1.2 When to Write a Function</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="id_6.html"><a href="id_6.html#structure-of-a-function"><i class="fa fa-check"></i><b>6.2</b> 2. Structure of a Function</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="id_6.html"><a href="id_6.html#basic-function-structure"><i class="fa fa-check"></i><b>6.2.1</b> 2.1 Basic Function Structure</a></li>
+<li class="chapter" data-level="6.2.2" data-path="id_6.html"><a href="id_6.html#naming-conventions-1"><i class="fa fa-check"></i><b>6.2.2</b> 2.2 Naming Conventions</a></li>
+<li class="chapter" data-level="6.2.3" data-path="id_6.html"><a href="id_6.html#function-arguments"><i class="fa fa-check"></i><b>6.2.3</b> 2.3 Function Arguments</a></li>
+<li class="chapter" data-level="6.2.4" data-path="id_6.html"><a href="id_6.html#function-body"><i class="fa fa-check"></i><b>6.2.4</b> 2.4 Function Body</a></li>
+<li class="chapter" data-level="6.2.5" data-path="id_6.html"><a href="id_6.html#return-values"><i class="fa fa-check"></i><b>6.2.5</b> 2.5 Return Values</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="id_6.html"><a href="id_6.html#documentation-and-commenting"><i class="fa fa-check"></i><b>6.3</b> 3. Documentation and Commenting</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="id_6.html"><a href="id_6.html#documenting-functions-with-roxygen2"><i class="fa fa-check"></i><b>6.3.1</b> 3.1 Documenting Functions with Roxygen2</a></li>
+<li class="chapter" data-level="6.3.2" data-path="id_6.html"><a href="id_6.html#commenting-inside-functions"><i class="fa fa-check"></i><b>6.3.2</b> 3.2 Commenting Inside Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="id_6.html"><a href="id_6.html#testing-functions"><i class="fa fa-check"></i><b>6.4</b> 4. Testing Functions</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="id_6.html"><a href="id_6.html#why-test-functions"><i class="fa fa-check"></i><b>6.4.1</b> 4.1 Why Test Functions?</a></li>
+<li class="chapter" data-level="6.4.2" data-path="id_6.html"><a href="id_6.html#writing-simple-tests"><i class="fa fa-check"></i><b>6.4.2</b> 4.2 Writing Simple Tests</a></li>
+<li class="chapter" data-level="6.4.3" data-path="id_6.html"><a href="id_6.html#automated-testing-with-testthat"><i class="fa fa-check"></i><b>6.4.3</b> 4.3 Automated Testing with <code>testthat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="id_6.html"><a href="id_6.html#advanced-function-techniques"><i class="fa fa-check"></i><b>6.5</b> 5. Advanced Function Techniques</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="id_6.html"><a href="id_6.html#function-factories"><i class="fa fa-check"></i><b>6.5.1</b> 5.1 Function Factories</a></li>
+<li class="chapter" data-level="6.5.2" data-path="id_6.html"><a href="id_6.html#closures"><i class="fa fa-check"></i><b>6.5.2</b> 5.2 Closures</a></li>
+<li class="chapter" data-level="6.5.3" data-path="id_6.html"><a href="id_6.html#vectorized-functions"><i class="fa fa-check"></i><b>6.5.3</b> 5.3 Vectorized Functions</a></li>
+<li class="chapter" data-level="6.5.4" data-path="id_6.html"><a href="id_6.html#anonymous-functions"><i class="fa fa-check"></i><b>6.5.4</b> 5.4 Anonymous Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="id_6.html"><a href="id_6.html#avoiding-common-pitfalls-in-function-writing"><i class="fa fa-check"></i><b>6.6</b> 6. Avoiding Common Pitfalls in Function Writing</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="id_6.html"><a href="id_6.html#overloading-functions"><i class="fa fa-check"></i><b>6.6.1</b> 6.1 Overloading Functions</a></li>
+<li class="chapter" data-level="6.6.2" data-path="id_6.html"><a href="id_6.html#handling-errors-gracefully"><i class="fa fa-check"></i><b>6.6.2</b> 6.2 Handling Errors Gracefully</a></li>
+<li class="chapter" data-level="6.6.3" data-path="id_6.html"><a href="id_6.html#avoiding-side-effects"><i class="fa fa-check"></i><b>6.6.3</b> 6.3 Avoiding Side Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="id_6.html"><a href="id_6.html#summary-4"><i class="fa fa-check"></i><b>6.7</b> 7. Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="error-handling.html"><a href="error-handling.html"><i class="fa fa-check"></i><b>7</b> Error Handling</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="error-handling.html"><a href="error-handling.html#introduction-to-error-handling"><i class="fa fa-check"></i><b>7.1</b> 1. Introduction to Error Handling</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="error-handling.html"><a href="error-handling.html#what-is-error-handling"><i class="fa fa-check"></i><b>7.1.1</b> 1.1 What is Error Handling?</a></li>
+<li class="chapter" data-level="7.1.2" data-path="error-handling.html"><a href="error-handling.html#types-of-errors-in-r"><i class="fa fa-check"></i><b>7.1.2</b> 1.2 Types of Errors in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="error-handling.html"><a href="error-handling.html#basic-error-handling-with-try-and-trycatch"><i class="fa fa-check"></i><b>7.2</b> 2. Basic Error Handling with <code>try</code> and <code>tryCatch</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="error-handling.html"><a href="error-handling.html#using-try"><i class="fa fa-check"></i><b>7.2.1</b> 2.1 Using <code>try</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="error-handling.html"><a href="error-handling.html#using-trycatch"><i class="fa fa-check"></i><b>7.2.2</b> 2.2 Using <code>tryCatch</code></a></li>
+<li class="chapter" data-level="7.2.3" data-path="error-handling.html"><a href="error-handling.html#returning-values-from-trycatch"><i class="fa fa-check"></i><b>7.2.3</b> 2.3 Returning Values from <code>tryCatch</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="error-handling.html"><a href="error-handling.html#custom-error-messages-with-stop-warning-and-message"><i class="fa fa-check"></i><b>7.3</b> 3. Custom Error Messages with <code>stop</code>, <code>warning</code>, and <code>message</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="error-handling.html"><a href="error-handling.html#using-stop-for-critical-errors"><i class="fa fa-check"></i><b>7.3.1</b> 3.1 Using <code>stop</code> for Critical Errors</a></li>
+<li class="chapter" data-level="7.3.2" data-path="error-handling.html"><a href="error-handling.html#using-warning-for-non-critical-issues"><i class="fa fa-check"></i><b>7.3.2</b> 3.2 Using <code>warning</code> for Non-Critical Issues</a></li>
+<li class="chapter" data-level="7.3.3" data-path="error-handling.html"><a href="error-handling.html#using-message-for-informational-messages"><i class="fa fa-check"></i><b>7.3.3</b> 3.3 Using <code>message</code> for Informational Messages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="error-handling.html"><a href="error-handling.html#defensive-programming"><i class="fa fa-check"></i><b>7.4</b> 4. Defensive Programming</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="error-handling.html"><a href="error-handling.html#input-validation"><i class="fa fa-check"></i><b>7.4.1</b> 4.1 Input Validation</a></li>
+<li class="chapter" data-level="7.4.2" data-path="error-handling.html"><a href="error-handling.html#asserting-conditions"><i class="fa fa-check"></i><b>7.4.2</b> 4.2 Asserting Conditions</a></li>
+<li class="chapter" data-level="7.4.3" data-path="error-handling.html"><a href="error-handling.html#handling-edge-cases"><i class="fa fa-check"></i><b>7.4.3</b> 4.3 Handling Edge Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="error-handling.html"><a href="error-handling.html#best-practices-for-error-handling"><i class="fa fa-check"></i><b>7.5</b> 5. Best Practices for Error Handling</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="error-handling.html"><a href="error-handling.html#provide-clear-and-informative-messages"><i class="fa fa-check"></i><b>7.5.1</b> 5.1 Provide Clear and Informative Messages</a></li>
+<li class="chapter" data-level="7.5.2" data-path="error-handling.html"><a href="error-handling.html#use-trycatch-for-anticipated-errors"><i class="fa fa-check"></i><b>7.5.2</b> 5.2 Use <code>tryCatch</code> for Anticipated Errors</a></li>
+<li class="chapter" data-level="7.5.3" data-path="error-handling.html"><a href="error-handling.html#log-errors-in-production-code"><i class="fa fa-check"></i><b>7.5.3</b> 5.3 Log Errors in Production Code</a></li>
+<li class="chapter" data-level="7.5.4" data-path="error-handling.html"><a href="error-handling.html#test-error-handling"><i class="fa fa-check"></i><b>7.5.4</b> 5.4 Test Error Handling</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="error-handling.html"><a href="error-handling.html#summary-5"><i class="fa fa-check"></i><b>7.6</b> 6. Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="version-control-with-git.html"><a href="version-control-with-git.html"><i class="fa fa-check"></i><b>8</b> Version Control with Git</a></li>
+<li class="chapter" data-level="9" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html"><i class="fa fa-check"></i><b>9</b> Reproducibility and Documentation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#introduction-to-reproducibility"><i class="fa fa-check"></i><b>9.1</b> 1. Introduction to Reproducibility</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#what-is-reproducibility"><i class="fa fa-check"></i><b>9.1.1</b> 1.1 What is Reproducibility?</a></li>
+<li class="chapter" data-level="9.1.2" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#challenges-to-reproducibility"><i class="fa fa-check"></i><b>9.1.2</b> 1.2 Challenges to Reproducibility</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#setting-up-a-reproducible-environment"><i class="fa fa-check"></i><b>9.2</b> 2. Setting Up a Reproducible Environment</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#managing-r-and-package-versions"><i class="fa fa-check"></i><b>9.2.1</b> 2.1 Managing R and Package Versions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#using-rmarkdown-for-reproducible-reports"><i class="fa fa-check"></i><b>9.2.2</b> 2.2 Using RMarkdown for Reproducible Reports</a></li>
+<li class="chapter" data-level="9.2.3" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#version-control-with-git-1"><i class="fa fa-check"></i><b>9.2.3</b> 2.3 Version Control with Git</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#sharing-your-work"><i class="fa fa-check"></i><b>9.3</b> 3. Sharing Your Work</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#sharing-code-and-data"><i class="fa fa-check"></i><b>9.3.1</b> 3.1 Sharing Code and Data</a></li>
+<li class="chapter" data-level="9.3.2" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#creating-reproducible-examples"><i class="fa fa-check"></i><b>9.3.2</b> 3.2 Creating Reproducible Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#documentation-for-reproducibility"><i class="fa fa-check"></i><b>9.4</b> 4. Documentation for Reproducibility</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#documenting-data"><i class="fa fa-check"></i><b>9.4.1</b> 4.1 Documenting Data</a></li>
+<li class="chapter" data-level="9.4.2" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#writing-a-readme-file"><i class="fa fa-check"></i><b>9.4.2</b> 4.2 Writing a README File</a></li>
+<li class="chapter" data-level="9.4.3" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#creating-a-reproducibility-checklist"><i class="fa fa-check"></i><b>9.4.3</b> 4.3 Creating a Reproducibility Checklist</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#case-study-reproducible-analysis-in-r"><i class="fa fa-check"></i><b>9.5</b> 5. Case Study: Reproducible Analysis in R</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#overview"><i class="fa fa-check"></i><b>9.5.1</b> 5.1 Overview</a></li>
+<li class="chapter" data-level="9.5.2" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#setting-up-the-project"><i class="fa fa-check"></i><b>9.5.2</b> 5.2 Setting Up the Project</a></li>
+<li class="chapter" data-level="9.5.3" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#documenting-the-analysis"><i class="fa fa-check"></i><b>9.5.3</b> 5.3 Documenting the Analysis</a></li>
+<li class="chapter" data-level="9.5.4" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#sharing-the-project"><i class="fa fa-check"></i><b>9.5.4</b> 5.4 Sharing the Project</a></li>
+<li class="chapter" data-level="9.5.5" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#running-the-analysis"><i class="fa fa-check"></i><b>9.5.5</b> 5.5 Running the Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="reproducibility-and-documentation.html"><a href="reproducibility-and-documentation.html#summary-6"><i class="fa fa-check"></i><b>9.6</b> 6. Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>10</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="conclusion.html"><a href="conclusion.html#recap-of-key-concepts"><i class="fa fa-check"></i><b>10.1</b> 1. Recap of Key Concepts</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="conclusion.html"><a href="conclusion.html#introduction-1"><i class="fa fa-check"></i><b>10.1.1</b> 1.1 Introduction</a></li>
+<li class="chapter" data-level="10.1.2" data-path="conclusion.html"><a href="conclusion.html#naming-conventions-2"><i class="fa fa-check"></i><b>10.1.2</b> 1.2 Naming Conventions</a></li>
+<li class="chapter" data-level="10.1.3" data-path="conclusion.html"><a href="conclusion.html#organising-scripts-1"><i class="fa fa-check"></i><b>10.1.3</b> 1.3 Organising Scripts</a></li>
+<li class="chapter" data-level="10.1.4" data-path="conclusion.html"><a href="conclusion.html#commenting-code-1"><i class="fa fa-check"></i><b>10.1.4</b> 1.4 Commenting Code</a></li>
+<li class="chapter" data-level="10.1.5" data-path="conclusion.html"><a href="conclusion.html#syntax-and-spacing"><i class="fa fa-check"></i><b>10.1.5</b> 1.5 Syntax and Spacing</a></li>
+<li class="chapter" data-level="10.1.6" data-path="conclusion.html"><a href="conclusion.html#writing-functions"><i class="fa fa-check"></i><b>10.1.6</b> 1.6 Writing Functions</a></li>
+<li class="chapter" data-level="10.1.7" data-path="conclusion.html"><a href="conclusion.html#error-handling-1"><i class="fa fa-check"></i><b>10.1.7</b> 1.7 Error Handling</a></li>
+<li class="chapter" data-level="10.1.8" data-path="conclusion.html"><a href="conclusion.html#version-control-with-git-2"><i class="fa fa-check"></i><b>10.1.8</b> 1.8 Version Control with Git</a></li>
+<li class="chapter" data-level="10.1.9" data-path="conclusion.html"><a href="conclusion.html#reproducibility-and-documentation-1"><i class="fa fa-check"></i><b>10.1.9</b> 1.9 Reproducibility and Documentation</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="conclusion.html"><a href="conclusion.html#the-importance-of-adopting-best-practices"><i class="fa fa-check"></i><b>10.2</b> 2. The Importance of Adopting Best Practices</a></li>
+<li class="chapter" data-level="10.3" data-path="conclusion.html"><a href="conclusion.html#moving-forward"><i class="fa fa-check"></i><b>10.3</b> 3. Moving Forward</a></li>
+<li class="chapter" data-level="10.4" data-path="conclusion.html"><a href="conclusion.html#final-thoughts-1"><i class="fa fa-check"></i><b>10.4</b> 4. Final Thoughts</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Best Coding Practices in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="id_6" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Writing Functions<a href="id_6.html#id_6" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Functions are fundamental building blocks in R programming. They allow you to encapsulate code logic into reusable, organized units. Writing well-structured functions not only enhances code readability but also improves maintainability, scalability, and reduces redundancy. In this chapter, we’ll explore best practices for writing functions in R, including function structure, parameter handling, return values, and documentation.</p>
+<div id="the-purpose-of-functions" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> 1. The Purpose of Functions<a href="id_6.html#the-purpose-of-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="why-write-functions" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> 1.1 Why Write Functions?<a href="id_6.html#why-write-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Functions serve several key purposes in programming:</p>
+<ul>
+<li><strong>Modularity</strong>: Functions break your code into smaller, manageable pieces, making it easier to understand and maintain.</li>
+<li><strong>Reusability</strong>: Functions can be reused across different scripts and projects, reducing code duplication and errors.</li>
+<li><strong>Abstraction</strong>: Functions abstract away complex logic, allowing you to focus on higher-level processes.</li>
+<li><strong>Testing</strong>: Functions make it easier to isolate and test specific parts of your code.</li>
+</ul>
+</div>
+<div id="when-to-write-a-function" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> 1.2 When to Write a Function<a href="id_6.html#when-to-write-a-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider writing a function when:</p>
+<ul>
+<li><strong>Code is Repeated</strong>: If you find yourself copying and pasting the same code in multiple places, it’s a good candidate for a function.</li>
+<li><strong>Complexity Increases</strong>: As the complexity of your code grows, encapsulating logic in functions helps manage that complexity.</li>
+<li><strong>Task Automation</strong>: When you need to perform a task repeatedly with different inputs, functions make this process more efficient.</li>
+</ul>
+</div>
+</div>
+<div id="structure-of-a-function" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> 2. Structure of a Function<a href="id_6.html#structure-of-a-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basic-function-structure" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> 2.1 Basic Function Structure<a href="id_6.html#basic-function-structure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An R function typically consists of three parts:</p>
+<ul>
+<li><p><strong>Function Name</strong>: Descriptive name that indicates the purpose of the function.</p></li>
+<li><p><strong>Arguments</strong>: Input parameters that the function will use.</p></li>
+<li><p><strong>Body</strong>: The code that performs the function’s operations.</p></li>
+<li><p><strong>Return Value</strong>: The output of the function, often explicitly stated using <code>return()</code>.</p></li>
+<li><p><strong>Example</strong>:
+<code>r     calculate_mean &lt;- function(x) {       # Remove NA values and calculate the mean       mean_value &lt;- mean(x, na.rm = TRUE)       return(mean_value)     }</code></p></li>
+</ul>
+</div>
+<div id="naming-conventions-1" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> 2.2 Naming Conventions<a href="id_6.html#naming-conventions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Descriptive Names</strong>: Use descriptive names for functions that clearly indicate what the function does. For example, <code>calculate_mean</code> is more informative than <code>calcMean</code>.</li>
+<li><strong>Verb-Noun Format</strong>: A common convention is to use a verb-noun format, such as <code>plot_data</code>, <code>get_summary</code>, or <code>calculate_average</code>.</li>
+<li><strong>Consistency</strong>: Be consistent with naming conventions throughout your codebase.</li>
+</ul>
+</div>
+<div id="function-arguments" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> 2.3 Function Arguments<a href="id_6.html#function-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>Use Default Values</strong>: Provide default values for arguments when appropriate. This makes the function more flexible and easier to use.
+<code>r     calculate_mean &lt;- function(x, na.rm = TRUE) {       mean_value &lt;- mean(x, na.rm = na.rm)       return(mean_value)     }</code></p></li>
+<li><p><strong>Argument Order</strong>: Place arguments in a logical order, usually starting with the most essential arguments and ending with optional ones.</p></li>
+<li><p><strong>Dot Arguments (<code>...</code>)</strong>: Use the <code>...</code> argument to allow for additional arguments to be passed to other functions within your function.
+<code>r     plot_with_options &lt;- function(x, y, ...) {       plot(x, y, ...)     }</code></p></li>
+</ul>
+</div>
+<div id="function-body" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> 2.4 Function Body<a href="id_6.html#function-body" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>Keep It Simple</strong>: The body of a function should be as simple and concise as possible. If a function becomes too long or complex, consider breaking it into smaller functions.</p></li>
+<li><p><strong>Use Temporary Variables</strong>: Use temporary variables within the function to store intermediate results. This makes the code more readable and easier to debug.
+<code>r     calculate_summary &lt;- function(x) {       mean_value &lt;- mean(x, na.rm = TRUE)       sd_value &lt;- sd(x, na.rm = TRUE)       return(list(mean = mean_value, sd = sd_value))     }</code></p></li>
+<li><p><strong>Avoid Side Effects</strong>: Functions should avoid altering global variables or states outside of their scope. This makes them more predictable and easier to debug.</p></li>
+</ul>
+</div>
+<div id="return-values" class="section level3 hasAnchor" number="6.2.5">
+<h3><span class="header-section-number">6.2.5</span> 2.5 Return Values<a href="id_6.html#return-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>Explicit Returns</strong>: Use the <code>return()</code> function to explicitly specify the output of your function. This clarifies what the function returns and can prevent unintended behavior.
+<code>r     calculate_sum &lt;- function(a, b) {       result &lt;- a + b       return(result)     }</code></p></li>
+<li><p><strong>Return Multiple Values</strong>: To return multiple values, use a list. This allows you to package several outputs into a single return object.
+<code>r     calculate_stats &lt;- function(x) {       mean_value &lt;- mean(x, na.rm = TRUE)       sd_value &lt;- sd(x, na.rm = TRUE)       return(list(mean = mean_value, sd = sd_value))     }</code></p></li>
+</ul>
+</div>
+</div>
+<div id="documentation-and-commenting" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> 3. Documentation and Commenting<a href="id_6.html#documentation-and-commenting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="documenting-functions-with-roxygen2" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> 3.1 Documenting Functions with Roxygen2<a href="id_6.html#documenting-functions-with-roxygen2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Roxygen2 is a popular tool for documenting R functions. It allows you to write documentation comments directly above your function, which can then be converted into formal documentation.</p>
+<ul>
+<li><p><strong>Basic Roxygen2 Template</strong>:
+<code>r     #' Calculate the mean of a numeric vector     #'     #' This function calculates the mean of a numeric vector, excluding any NA values.     #'     #' @param x A numeric vector.     #' @param na.rm A logical value indicating whether NA values should be removed.     #' @return The mean of the vector.     #' @export     calculate_mean &lt;- function(x, na.rm = TRUE) {       mean_value &lt;- mean(x, na.rm = na.rm)       return(mean_value)     }</code></p></li>
+<li><p><strong>Key Roxygen2 Tags</strong>:</p>
+<ul>
+<li><code>@param</code>: Describes each function parameter.</li>
+<li><code>@return</code>: Describes the return value.</li>
+<li><code>@export</code>: Indicates that the function should be made available to users of your package.</li>
+<li><code>@examples</code>: Provides examples of how to use the function.</li>
+</ul></li>
+</ul>
+</div>
+<div id="commenting-inside-functions" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> 3.2 Commenting Inside Functions<a href="id_6.html#commenting-inside-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>Explain Complex Logic</strong>: Use comments inside your function to explain complex logic or non-obvious decisions. This helps others (and your future self) understand the code.
+<code>r     calculate_variance &lt;- function(x) {       n &lt;- length(x)       mean_x &lt;- mean(x, na.rm = TRUE)       # Subtract mean and square the result       squared_diffs &lt;- (x - mean_x)^2       variance &lt;- sum(squared_diffs, na.rm = TRUE) / (n - 1)       return(variance)     }</code></p></li>
+<li><p><strong>Comment Sections, Not Every Line</strong>: Avoid over-commenting by focusing on sections of code rather than individual lines, unless a line is particularly complex or non-intuitive.</p></li>
+</ul>
+</div>
+</div>
+<div id="testing-functions" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> 4. Testing Functions<a href="id_6.html#testing-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="why-test-functions" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> 4.1 Why Test Functions?<a href="id_6.html#why-test-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Testing functions is crucial to ensure they behave as expected. Writing tests helps catch errors early, simplifies debugging, and provides confidence that changes in the code don’t introduce new bugs.</p>
+</div>
+<div id="writing-simple-tests" class="section level3 hasAnchor" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> 4.2 Writing Simple Tests<a href="id_6.html#writing-simple-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>Test Different Scenarios</strong>: Write tests that cover a range of input scenarios, including typical cases, edge cases, and error cases.
+```r
+# Test for a standard numeric vector
+stopifnot(calculate_mean(c(1, 2, 3, 4, 5)) == 3)</p>
+<p># Test for a vector with NA values
+stopifnot(calculate_mean(c(1, 2, NA, 4, 5)) == 3)</p>
+<p># Test for an empty vector
+stopifnot(is.na(calculate_mean(c())))
+```</p></li>
+<li><p><strong>Use <code>stopifnot()</code></strong>: The <code>stopifnot()</code> function is a simple way to assert that a condition is true. If the condition is false, it will stop execution and print an error message.</p></li>
+</ul>
+</div>
+<div id="automated-testing-with-testthat" class="section level3 hasAnchor" number="6.4.3">
+<h3><span class="header-section-number">6.4.3</span> 4.3 Automated Testing with <code>testthat</code><a href="id_6.html#automated-testing-with-testthat" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For larger projects, consider using the <code>testthat</code> package to automate testing. <code>testthat</code> provides a framework for writing and running tests, making it easier to manage and scale your tests.</p>
+<ul>
+<li><p><strong>Basic <code>testthat</code> Example</strong>:
+```r
+library(testthat)</p>
+<p>test_that(“calculate_mean works correctly”, {
+expect_equal(calculate_mean(c(1, 2, 3, 4, 5)), 3)
+expect_equal(calculate_mean(c(1, 2, NA, 4, 5)), 3)
+expect_true(is.na(calculate_mean(c())))
+})
+```</p></li>
+</ul>
+</div>
+</div>
+<div id="advanced-function-techniques" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> 5. Advanced Function Techniques<a href="id_6.html#advanced-function-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="function-factories" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> 5.1 Function Factories<a href="id_6.html#function-factories" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Function factories are functions that create and return other functions. This is useful when you need to generate customized functions dynamically.</p>
+<ul>
+<li><p><strong>Example</strong>:
+```r
+power_function_factory &lt;- function(power) {
+function(x) {
+x^power
+}
+}</p>
+<p>square &lt;- power_function_factory(2)
+cube &lt;- power_function_factory(3)
+```</p></li>
+</ul>
+</div>
+<div id="closures" class="section level3 hasAnchor" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> 5.2 Closures<a href="id_6.html#closures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A closure is a function that captures the environment in which it was created. Closures are powerful in creating functions with memory, where the function retains access to variables from its creation context.</p>
+<ul>
+<li><p><strong>Example</strong>:
+```r
+make_counter &lt;- function() {
+count &lt;- 0
+function() {
+count &lt;&lt;- count + 1
+return(count)
+}
+}</p>
+<p>counter &lt;- make_counter()
+counter() # Returns 1
+counter() # Returns 2
+```</p></li>
+</ul>
+</div>
+<div id="vectorized-functions" class="section level3 hasAnchor" number="6.5.3">
+<h3><span class="header-section-number">6.5.3</span> 5.3 Vectorized Functions<a href="id_6.html#vectorized-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vectorized functions operate on entire vectors or arrays of data at once, rather than using loops to iterate over elements. In R, many built-in functions are vectorized, which makes them not only more concise but also significantly faster due to underlying optimizations.</p>
+<ul>
+<li><p><strong>Example of a Vectorized Function</strong>:
+<code>r     # Squaring each element in a vector     x &lt;- c(1, 2, 3, 4, 5)     squared_x &lt;- x^2</code></p></li>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><strong>Performance</strong>: Vectorized operations are typically faster because they are optimized in R’s underlying C code.</li>
+<li><strong>Conciseness</strong>: Vectorized code is often more concise and easier to read.</li>
+<li><strong>Avoiding Loops</strong>: While loops can be necessary in some cases, vectorization often removes the need for explicit loops.</li>
+</ul></li>
+</ul>
+</div>
+<div id="anonymous-functions" class="section level3 hasAnchor" number="6.5.4">
+<h3><span class="header-section-number">6.5.4</span> 5.4 Anonymous Functions<a href="id_6.html#anonymous-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Anonymous functions, also known as lambda functions, are functions that are defined without being named. These are particularly useful for quick, one-off operations that don’t require a full function definition.</p>
+<ul>
+<li><p><strong>Using Anonymous Functions with <code>apply()</code></strong>:
+<code>r     # Applying an anonymous function to each element in a list     result &lt;- sapply(1:5, function(x) x^2)</code></p></li>
+<li><p><strong>When to Use</strong>:</p>
+<ul>
+<li><strong>Inline Operations</strong>: Use anonymous functions when the operation is simple and will only be used in one place.</li>
+<li><strong>Temporary Use</strong>: They are ideal for temporary, throwaway functionality that doesn’t require reuse.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="avoiding-common-pitfalls-in-function-writing" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> 6. Avoiding Common Pitfalls in Function Writing<a href="id_6.html#avoiding-common-pitfalls-in-function-writing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overloading-functions" class="section level3 hasAnchor" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> 6.1 Overloading Functions<a href="id_6.html#overloading-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Avoid writing overly complex functions that try to do too much. This can lead to functions that are difficult to understand, maintain, and test. Instead, follow the Single Responsibility Principle (SRP), which suggests that a function should do one thing and do it well.</p>
+<ul>
+<li><p><strong>Example of Overloaded Function</strong>:
+<code>r     process_data &lt;- function(x) {       if (is.numeric(x)) {         return(mean(x))       } else if (is.character(x)) {         return(tolower(x))       } else {         stop("Unsupported data type")       }     }</code></p></li>
+<li><p><strong>Solution</strong>: Split this function into two separate functions—one for numeric data and one for character data.</p></li>
+</ul>
+</div>
+<div id="handling-errors-gracefully" class="section level3 hasAnchor" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> 6.2 Handling Errors Gracefully<a href="id_6.html#handling-errors-gracefully" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Functions should handle errors gracefully and provide informative error messages to help users diagnose problems. Use <code>stop()</code>, <code>warning()</code>, and <code>message()</code> functions to manage errors, warnings, and informational messages, respectively.</p>
+<ul>
+<li><strong>Example of Error Handling</strong>:
+<code>r     divide &lt;- function(a, b) {       if (b == 0) {         stop("Error: Division by zero is not allowed.")       }       return(a / b)     }</code></li>
+</ul>
+</div>
+<div id="avoiding-side-effects" class="section level3 hasAnchor" number="6.6.3">
+<h3><span class="header-section-number">6.6.3</span> 6.3 Avoiding Side Effects<a href="id_6.html#avoiding-side-effects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Functions should be as “pure” as possible, meaning they should not alter global variables or states outside of their scope. Side effects can make functions unpredictable and harder to debug.</p>
+<ul>
+<li><p><strong>Example of a Function with a Side Effect</strong>:
+<code>r     increment_global &lt;- function() {       global_var &lt;&lt;- global_var + 1     }</code></p></li>
+<li><p><strong>Solution</strong>: Instead, return the new value and let the caller handle any changes to global variables.
+<code>r     increment &lt;- function(x) {       return(x + 1)     }</code></p></li>
+</ul>
+</div>
+</div>
+<div id="summary-4" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> 7. Summary<a href="id_6.html#summary-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Writing well-structured functions is a cornerstone of good programming practice in R. Functions allow you to create modular, reusable, and testable code, making your scripts more organized and efficient. By following best practices—such as using clear naming conventions, handling errors gracefully, and avoiding side effects—you can write functions that are both powerful and easy to understand.</p>
+<p>In this chapter, we covered the essentials of writing functions, including function structure, argument handling, return values, and documentation. We also explored advanced techniques such as vectorization, closures, and anonymous functions, as well as common pitfalls to avoid.</p>
+<p>In the next chapter, we will discuss best practices for organizing your code into scripts and packages, ensuring that your R projects remain manageable as they grow in size and complexity.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="code-syntax-and-spacing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="error-handling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-function.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
